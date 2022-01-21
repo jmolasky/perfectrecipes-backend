@@ -13,7 +13,7 @@ async function isAuthenticated(req, res, next) {
     req.user = user;
     next();
   } catch (err) {
-    res.status(400).json({ message: error.message });
+    res.status(400).json({ message: err.message });
   }
 }
 
