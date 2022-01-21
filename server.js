@@ -11,8 +11,10 @@ const app = express();
 const admin = require("firebase-admin");
 
 // const serviceAccount = require("./service-account-credientials.json");
-const { serviceAccount = require("./service-account-credientials.json") } =
-  process.env;
+// const { serviceAccount = require("./service-account-credientials.json") } =
+//   process.env;
+
+const serviceAccount = JSON.parse(process.env.serviceAccount);
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
