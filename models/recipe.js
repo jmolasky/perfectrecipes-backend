@@ -1,22 +1,13 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-// const ingredientSchema = new Schema(
-//   {
-//     name: String,
-//     measurement: String,
-//     amount: Number,
-//   },
-//   { timestamps: true }
-// );
-
 const recipeSchema = new Schema(
   {
     name: String,
-    // ingredients: [ingredientSchema],
     ingredients: Array,
     instructions: String,
     image: String,
+    uId: String,
   },
   { timestamps: true }
 );

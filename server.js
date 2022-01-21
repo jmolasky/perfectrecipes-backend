@@ -8,6 +8,14 @@ const cors = require("cors");
 const morgan = require("morgan");
 const app = express();
 
+const admin = require("firebase-admin");
+
+const serviceAccount = require("./service-account-credientials.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
+
 const { PORT = 3001, DATABASE_URL } = process.env;
 
 ///////////////////////////////
