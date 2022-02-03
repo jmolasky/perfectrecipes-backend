@@ -2,6 +2,7 @@ const express = require("express");
 const recipesRouter = express.Router();
 const Recipe = require("../models/recipe");
 const admin = require("firebase-admin");
+const recipeScraper = require("recipe-scraper");
 
 // authentication middleware
 async function isAuthenticated(req, res, next) {
@@ -17,12 +18,28 @@ async function isAuthenticated(req, res, next) {
   }
 }
 
+async function parseRecipe(url) {
+  let recipe = await recipeScraper(url);
+  return recipe;
+}
+
 // Recipes index route
 recipesRouter.get("/", isAuthenticated, async (req, res) => {
   try {
     res.json(await Recipe.find({ uId: req.user.uid }));
   } catch (err) {
     res.status(400).json(err);
+  }
+});
+
+// Recipe Input Form Populate Route
+recipesRouter.post("/add", isAuthenticated, async (req, res) => {
+  try {
+    const url = req.body.url;
+    const recipe = await parseRecipe(url);
+    res.json(recipe);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
   }
 });
 
